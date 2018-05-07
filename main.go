@@ -5,19 +5,23 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"golang-gin-jwt-mysql-restful-api/controllers"
+	"golang-gin-jwt-mysql-restful-api/db"
 )
 
 func main() {
+	db.Init()
 	port := os.Getenv("PORT")
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
 	if port == "" {
-		port = "8000"
+		port = "4200"
 	}
 
-	r.GET("/", controllers.HelloWorld)
+	r.GET("/", controllers.GetUsers)
 
 	http.ListenAndServe(":"+port, r)
+
+	defer db.CloseDb() // close mysql connection
 }
