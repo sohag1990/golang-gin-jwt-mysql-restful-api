@@ -8,5 +8,5 @@ type Address struct {
 	City string
 	Zip string
 	Country string
-	UserID uint
+	ProfileID uint
 }

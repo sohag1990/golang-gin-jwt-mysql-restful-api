@@ -6,6 +6,6 @@ type Profile struct {
 	gorm.Model
 	FirstName string
 	LastName string
-	Address Address
+	Address *Address
 	UserID uint
 }

@@ -20,6 +20,7 @@ func main() {
 	}
 
 	r.GET("/", controllers.GetUsers)
+	r.POST("/user/", controllers.CreateUser)
 
 	http.ListenAndServe(":"+port, r)
 
