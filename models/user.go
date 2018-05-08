@@ -1,7 +1,9 @@
 package models
 
+import "github.com/jinzhu/gorm"
+
 type User struct {
-	ID int
+	gorm.Model
 	Username string
 	Email string
 	Password string

@@ -1,0 +1,2 @@
+Mysql docker create command
+docker run --name go-mariadb -v ~/dockerFiles/datadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=111111 -d mariadb
