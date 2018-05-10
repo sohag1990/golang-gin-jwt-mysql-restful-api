@@ -23,16 +23,39 @@ func CreateUser(c *gin.Context) {
 
 	c.BindJSON(&user)
 
-	fmt.Println(user)
+	var getDb = db.GetDb()
+	getDb.Create(&user)
 	c.JSON(200, user)
 }
 func UpdateUser(c *gin.Context) {
+	var user models.User
 
+	c.BindJSON(&user)
+
+	var getDb = db.GetDb()
+	getDb.Model(&user).Updates(&user)
+	c.JSON(200, user)
 }
 
 func DeleteUser(c *gin.Context) {
+	var user models.User
 
+	c.BindJSON(&user)
+
+	var getDb = db.GetDb()
+	getDb.Delete(&user)
+	getDb.Delete(&user.Profile)
+	getDb.Delete(&user.Profile.Address)
+	c.JSON(200, user)
 }
 func GetUser(c *gin.Context) {
+	userID :=c.Params.ByName("id")
+	var user models.User
+	var getDb = db.GetDb()
 
+	if err := getDb.Model(&user).Where(userID).Preload("Profile").Preload("Profile.Address").First(&user).Error; err != nil {
+		fmt.Println(err)
+		c.AbortWithStatus(404)
+	}
+	c.JSON(200, user)
 }

@@ -20,7 +20,10 @@ func main() {
 	}
 
 	r.GET("/", controllers.GetUsers)
+	r.GET("/user/:id", controllers.GetUser)
 	r.POST("/user/", controllers.CreateUser)
+	r.PUT("/user/", controllers.UpdateUser)
+	r.DELETE("/user/", controllers.DeleteUser)
 
 	http.ListenAndServe(":"+port, r)
 
