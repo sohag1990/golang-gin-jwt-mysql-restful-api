@@ -1,19 +1,19 @@
 package middlewares
 
 import (
-	"github.com/appleboy/gin-jwt"
-	"time"
 	"github.com/gin-gonic/gin"
+	"time"
+	"github.com/appleboy/gin-jwt"
 	"fmt"
 	"golang-gin-jwt-mysql-restful-api/db"
 	"golang-gin-jwt-mysql-restful-api/models"
 )
 
-func GinJWTMiddlewareHandler() *jwt.GinJWTMiddleware {
+func GinJwtMiddlewareHandler() *jwt.GinJWTMiddleware {
 	return &jwt.GinJWTMiddleware{
-		Realm: "Test Zone",
-		Key: []byte("skjdlfjs@#@#!@!kjklj"),
-		Timeout: time.Hour,
+		Realm:      "test zone",
+		Key:        []byte("&*3kasdJKH#$sjksQq774kakakl*(&(8320_))92@#$^$%&^%^*&@#kljlkjLLLLAskaiw#S"),
+		Timeout:    time.Hour * 100,
 		MaxRefresh: time.Hour,
 		Authenticator: func(userId string, password string, c *gin.Context) (string, bool) {
 			var getDB = db.GetDb()
@@ -29,16 +29,21 @@ func GinJWTMiddlewareHandler() *jwt.GinJWTMiddleware {
 
 			return userId, false
 		},
-		Authorizator: func(userID string, c *gin.Context) bool {
+		Authorizator: func(userId string, c *gin.Context) bool {
+			//if userId == "sohag" {
+			//	return true
+			//}
+			//return false
+
 			return true
 		},
 		Unauthorized: func(c *gin.Context, code int, message string) {
 			c.JSON(code, gin.H{
-				"code": code,
+				"code":    code,
 				"message": message,
 			})
 		},
-		TokenLookup: "Header:Authentication",
+		TokenLookup: "header:Authorization",
 		TokenHeadName: "Bearer",
 		TimeFunc: time.Now,
 	}

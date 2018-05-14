@@ -22,7 +22,7 @@ func main() {
 	}
 
 	//jwt Middleware
-	authMiddleware := middlewares.GinJWTMiddlewareHandler()
+	authMiddleware := middlewares.GinJwtMiddlewareHandler()
 	// public api calls
 	r.POST("/api/v1/user/login", authMiddleware.LoginHandler)
 	r.POST("/api/v1/user/", controllers.CreateUser)
