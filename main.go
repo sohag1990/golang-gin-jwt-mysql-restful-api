@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"golang-gin-jwt-mysql-restful-api/controllers"
 	"golang-gin-jwt-mysql-restful-api/db"
+	"golang-gin-jwt-mysql-restful-api/middlewares"
 )
 
 func main() {
@@ -14,16 +15,28 @@ func main() {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+	r.Use(middlewares.CORSMiddlewareHandler())
 
 	if port == "" {
 		port = "4200"
 	}
 
-	r.GET("/", controllers.GetUsers)
-	r.GET("/user/:id", controllers.GetUser)
-	r.POST("/user/", controllers.CreateUser)
-	r.PUT("/user/", controllers.UpdateUser)
-	r.DELETE("/user/", controllers.DeleteUser)
+	//jwt Middleware
+	authMiddleware := middlewares.GinJWTMiddlewareHandler()
+	// public api calls
+	r.POST("/api/v1/user/login", authMiddleware.LoginHandler)
+	r.POST("/api/v1/user/", controllers.CreateUser)
+
+	//restricted api calls
+	auth := r.Group("/api/v1/")
+	auth.Use(authMiddleware.MiddlewareFunc())
+	{
+		auth.GET("/users/", controllers.GetUsers)
+		auth.GET("/user/:id", controllers.GetUser)
+
+		auth.PUT("/user/", controllers.UpdateUser)
+		auth.DELETE("/user/", controllers.DeleteUser)
+	}
 
 	http.ListenAndServe(":"+port, r)
 
