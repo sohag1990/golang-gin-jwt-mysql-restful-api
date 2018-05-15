@@ -12,7 +12,7 @@ import (
 func GinJwtMiddlewareHandler() *jwt.GinJWTMiddleware {
 	return &jwt.GinJWTMiddleware{
 		Realm:      "test zone",
-		Key:        []byte("&*3kasdJKH#$sjksQq774kakakl*(&(8320_))92@#$^$%&^%^*&@#kljlkjLLLLAskaiw#S"),
+		Key:        []byte("skldjlkj"),
 		Timeout:    time.Hour * 100,
 		MaxRefresh: time.Hour,
 		Authenticator: func(userId string, password string, c *gin.Context) (string, bool) {
