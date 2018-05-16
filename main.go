@@ -23,12 +23,13 @@ func main() {
 
 	//jwt Middleware
 	authMiddleware := middlewares.GinJwtMiddlewareHandler()
+
+	auth := r.Group("/api/v1/")
 	// public api calls
-	r.POST("/api/v1/user/login", authMiddleware.LoginHandler)
-	r.POST("/api/v1/user/", controllers.CreateUser)
+	auth.POST("/user/login", authMiddleware.LoginHandler)
+	auth.POST("/user/", controllers.CreateUser)
 
 	//restricted api calls
-	auth := r.Group("/api/v1/")
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
 		auth.GET("/users/", controllers.GetUsers)
