@@ -37,6 +37,8 @@ func main() {
 
 		auth.PUT("/user/", controllers.UpdateUser)
 		auth.DELETE("/user/", controllers.DeleteUser)
+
+		auth.POST("/post/", controllers.CreatePost)
 	}
 
 	http.ListenAndServe(":"+port, r)

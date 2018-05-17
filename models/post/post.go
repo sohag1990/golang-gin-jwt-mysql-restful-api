@@ -1,21 +1,19 @@
 package post
 
-//type Post struct {
-//	gorm.Model
-//
-//	DateGmt time.Time
-//	ModifiedGmt time.Time
-//	Slug string
-//	Status bool
-//	Type string
-//	Title Title
-//	Content Content
-//	Excerpt Excerpt
-//	Author models.User
-//	FeaturedMedia int
-//	CommentStatus string
-//	Format string
-//	Meta  []int
-//	Categories []int
-//	Tags []int
-//}
+import (
+	"github.com/jinzhu/gorm"
+	"golang-gin-jwt-mysql-restful-api/models"
+)
+
+type Post struct {
+	gorm.Model
+	Type string
+	Title string
+	Content string
+	Excerpt string
+	Author models.User
+	UserId uint
+}
+
+
+//Categories []int

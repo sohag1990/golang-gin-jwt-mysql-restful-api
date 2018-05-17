@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"golang-gin-jwt-mysql-restful-api/db"
 	"golang-gin-jwt-mysql-restful-api/models"
+	"strconv"
 )
 
 func GinJwtMiddlewareHandler() *jwt.GinJWTMiddleware {
@@ -24,7 +25,9 @@ func GinJwtMiddlewareHandler() *jwt.GinJWTMiddleware {
 			} else {
 				fmt.Println(user)
 				//c.JSON(200, user)
-				return userId, true
+				// userNameId = username,id // so i can get username and id anywhere
+				userNameID := userId+","+ strconv.FormatUint(uint64(user.ID), 10)
+				return userNameID, true
 			}
 
 			return userId, false

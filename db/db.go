@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"fmt"
 	"golang-gin-jwt-mysql-restful-api/models"
+	"golang-gin-jwt-mysql-restful-api/models/post"
 )
 
 
@@ -25,6 +26,7 @@ func Init() {
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Profile{})
 	db.AutoMigrate(&models.Address{})
+	db.AutoMigrate(&post.Post{})
 
 }
 func GetDb() *gorm.DB {
