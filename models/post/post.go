@@ -13,6 +13,7 @@ type Post struct {
 	Excerpt string
 	Author models.User
 	UserId uint
+	UserName string
 }
 
 

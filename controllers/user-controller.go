@@ -29,7 +29,6 @@ func CreateUser(c *gin.Context) {
 }
 func UpdateUser(c *gin.Context) {
 	var user models.User
-
 	c.BindJSON(&user)
 
 	var getDb = db.GetDb()
@@ -43,9 +42,9 @@ func DeleteUser(c *gin.Context) {
 	c.BindJSON(&user)
 
 	var getDb = db.GetDb()
-	getDb.Delete(&user)
-	getDb.Delete(&user.Profile)
-	getDb.Delete(&user.Profile.Address)
+	getDb.Where(user.ID).Delete(&user)
+	getDb.Where(user.Profile.ID).Delete(&user.Profile)
+	getDb.Where(user.Profile.Address.ID).Delete(&user.Profile.Address)
 	c.JSON(200, user)
 }
 func GetUser(c *gin.Context) {
@@ -54,8 +53,9 @@ func GetUser(c *gin.Context) {
 	var getDb = db.GetDb()
 
 	if err := getDb.Model(&user).Where(userID).Preload("Profile").Preload("Profile.Address").First(&user).Error; err != nil {
-		fmt.Println(err)
+		//fmt.Println(err)
 		c.AbortWithStatus(404)
+	}else {
+		c.JSON(200, user)
 	}
-	c.JSON(200, user)
 }

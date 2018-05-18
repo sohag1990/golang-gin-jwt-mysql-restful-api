@@ -28,7 +28,7 @@ func main() {
 	// public api calls
 	auth.POST("/user/login", authMiddleware.LoginHandler)
 	auth.POST("/user/", controllers.CreateUser)
-
+	auth.GET("/posts", controllers.GetPosts)
 	//restricted api calls
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
@@ -39,6 +39,10 @@ func main() {
 		auth.DELETE("/user/", controllers.DeleteUser)
 
 		auth.POST("/post/", controllers.CreatePost)
+		auth.GET("/posts/my-posts", controllers.GetMyPosts)
+		auth.GET("/post/:id", controllers.GetPost)
+		auth.PUT("/post/", controllers.UpdatePost)
+		auth.DELETE("/post/", controllers.DeletePost)
 	}
 
 	http.ListenAndServe(":"+port, r)
